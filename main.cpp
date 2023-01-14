@@ -31,15 +31,16 @@ int main(int argc, char *argv[]) {
 	
 	options_description description{
 		""
-		"+--------------------------------------------+"
+		"+--------------------------------------------+" "\n"
 		"|               --<* MBed *>--               |" "\n"
-		"| lets you embed any file in a c/c++ program |"
+		"| lets you embed any file in a c/c++ program |" "\n"
 		"|       using a generated header file.       |" "\n"
-		"+--------------------------------------------+"
+		"+--------------------------------------------+" "\n\n"
+		"Options"
 	};
 	
 	description.add_options()
-		("input,i", value<vector<string>>(), "file(s) to generate embeddable data for")
+		("input,i", value<vector<string>>()->default_value({}, ""), "file(s) to generate embeddable data for")
 		("output,o", value<string>(), "output name for '.c' and '.h' files")
 		("header-guard,g", value<string>()->default_value(""), "name of the header guard for the generated '.h' file")
 		("header-only,H", "produce only a header file (without a '.c' source file")

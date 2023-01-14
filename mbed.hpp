@@ -1,6 +1,7 @@
 #include <fstream>
 #include <iomanip>
 #include <iostream>
+#include <termcolor/termcolor.hpp>
 
 #include "util.hpp"
 
@@ -14,7 +15,7 @@ void generateFromFileToFile(
 	bool headerOnly,
 	bool watch
 ) {
-
+	throw "Not Implemented";
 }
 
 void generateFromStdinToFile(
@@ -23,7 +24,21 @@ void generateFromStdinToFile(
 	const std::string &guard,
 	bool headerOnly
 ) {
-
+	std::ofstream outputHeaderFile{output + ".h", std::ios_base::trunc};
+	printHeader(outputHeaderFile, guard);
+	
+	if (headerOnly) {
+		printVariableWithValue(outputHeaderFile, inputs);
+	} else {
+		printExternVariable(outputHeaderFile, inputs);
+		
+		std::ofstream outputCFile{output + ".c", std::ios_base::trunc};
+		printVariableWithValue(outputCFile, inputs);
+		outputCFile.close();
+	}
+	
+	printFooter(outputHeaderFile);
+	outputHeaderFile.close();
 }
 
 void generateFromStdinToStdout(
@@ -31,27 +46,12 @@ void generateFromStdinToStdout(
 	const std::string &guard,
 	bool charsOnly
 ) {
-	auto data = readStdin();
-	auto last = data.back();
-	data.pop_back();
-	
-	if (!charsOnly) {
-		auto name = !inputs.empty() ? inputs[0] : "mbed";
-		std::cout
-			<< "#ifndef MBED_" << guard << "_H""\n"
-			<< "#define MBED_" << guard << "_H""\n"
-			<< "const unsigned char " << name << "[]={";
-	}
-	
-	for (const auto &c: data) {
-		std::cout << hexFor(c) << "',";
-	}
-	std::cout << hexFor(last) << "'";
-	
-	if (!charsOnly) {
-		std::cout <<
-		          "};" "\n"
-		          "#endif";
+	if (charsOnly) {
+		printHexValues();
+	} else {
+		printHeader(guard);
+		printVariableWithValue(inputs);
+		printFooter();
 	}
 }
 
