@@ -40,7 +40,7 @@ int main(int argc, char *argv[]) {
 	};
 	
 	description.add_options()
-		("input,i", value<vector<string>>()->default_value({}, ""), "file(s) to generate embeddable data for")
+		("input,i", value<vector<string>>()->multitoken()->default_value({}, ""), "file(s) to generate embeddable data for")
 		("output,o", value<string>(), "output name for '.c' and '.h' files")
 		("header-guard,g", value<string>()->default_value(""), "name of the header guard for the generated '.h' file")
 		("header-only,H", "produce only a header file (without a '.c' source file")

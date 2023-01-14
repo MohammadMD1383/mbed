@@ -42,31 +42,48 @@ void printHexValues() {
 
 void printVariable(
 	std::ostream &os,
-	const std::vector<std::string> &inputs
+	const std::string &name
 ) {
-	auto name = !inputs.empty() ? inputs[0] : "mbed";
 	os << "const char " << name << "[]";
 }
 
-void printVariable(const std::vector<std::string> &inputs) {
-	printVariable(std::cout, inputs);
+void printVariable(const std::string &name) {
+	printVariable(std::cout, name);
 }
 
-void printExternVariable(std::ostream &os, const std::vector<std::string> &inputs) {
+void printExternVariable(std::ostream &os, const std::string &name) {
 	os << "extern ";
-	printVariable(os, inputs);
+	printVariable(os, name);
 	os << ";";
 }
 
-void printVariableWithValue(std::ostream &os, const std::vector<std::string> &inputs) {
-	printVariable(os, inputs);
+void printVariableWithValue(
+	std::istream &is,
+	std::ostream &os,
+	const std::string &name
+) {
+	printVariable(os, name);
 	os << "={";
-	printHexValues(os);
+	printHexValues(is, os);
 	os << "};";
 }
 
-void printVariableWithValue(const std::vector<std::string> &inputs) {
-	printVariableWithValue(std::cout, inputs);
+void printVariableWithValue(
+	std::istream &is,
+	const std::string &name
+) {
+	printVariableWithValue(is, std::cout, name);
+}
+
+void printVariableWithValue(
+	std::ostream &os,
+	const std::string &name
+) {
+	printVariableWithValue(std::cin, os, name);
+}
+
+void printVariableWithValue(const std::string &name) {
+	printVariableWithValue(std::cin, std::cout, name);
 }
 
 void printHeader(
@@ -88,6 +105,10 @@ void printFooter(std::ostream &os) {
 
 void printFooter() {
 	printFooter(std::cout);
+}
+
+std::string generateSingleName(const std::vector<std::string> &inputs) {
+	return inputs.empty() ? "mbed" : inputs[0];
 }
 
 #endif //MBED_UTIL_HPP
