@@ -79,18 +79,20 @@ int main(int argc, char *argv[]) {
 		const auto inputFromStdin = vmap.contains("stdin") || !vmap.contains("input");
 		const auto outputToStdout = vmap.contains("stdout") || !vmap.contains("output");
 		const auto &guard = vmap["header-guard"].as<string>();
+		const auto &inputs = vmap["input"].as<vector<string>>();
 		
 		if (outputToStdout) {
 			const auto charsOnly = vmap.contains("chars-only");
 			
 			if (inputFromStdin) {
 				generateFromStdinToStdout(
+					inputs,
 					guard,
 					charsOnly
 				);
 			} else {
 				generateFromFileToStdout(
-					vmap["input"].as<vector<string>>(),
+					inputs,
 					guard,
 					charsOnly
 				);
@@ -101,13 +103,14 @@ int main(int argc, char *argv[]) {
 			
 			if (inputFromStdin) {
 				generateFromStdinToFile(
+					inputs,
 					output,
 					guard,
 					headerOnly
 				);
 			} else {
 				generateFromFileToFile(
-					vmap["input"].as<vector<string>>(),
+					inputs,
 					output,
 					guard,
 					headerOnly,

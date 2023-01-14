@@ -18,6 +18,7 @@ void generateFromFileToFile(
 }
 
 void generateFromStdinToFile(
+	const std::vector<std::string> &inputs,
 	const std::string &output,
 	const std::string &guard,
 	bool headerOnly
@@ -42,12 +43,10 @@ void generateFromStdinToStdout(
 			<< "const unsigned char " << name << "[]={";
 	}
 	
-	std::cout << std::hex << std::uppercase << std::setfill('0') << std::right;
 	for (const auto &c: data) {
-		std::cout << "'\\x" << std::setw(2) << +c << "',";
+		std::cout << hexFor(c) << "',";
 	}
-	std::cout << "'\\x" << std::setw(2) << +last << "'";
-	std::cout << std::dec << std::nouppercase << std::setfill(' ') << std::internal;
+	std::cout << hexFor(last) << "'";
 	
 	if (!charsOnly) {
 		std::cout <<
