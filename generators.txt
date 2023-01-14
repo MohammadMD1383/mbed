@@ -1,0 +1,5 @@
+stdin -> file   (.c/.h) [header-only]
+stdin -> stdout (.h)    [chars-only]
+file  -> file   (.c/.h) [header_only,watch]
+file  -> stdout (.h)    [chars-only]
+

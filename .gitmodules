@@ -1,0 +1,3 @@
+[submodule "lib/termcolor"]
+	path = lib/termcolor
+	url = ./lib/termcolor/
