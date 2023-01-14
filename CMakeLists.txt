@@ -5,6 +5,11 @@ set(CMAKE_C_STANDARD 17)
 
 add_definitions(-DMBED_VERSION="1.0.0")
 
+if (DEFINED WINDOWS)
+	add_definitions(-DWINDOWS)
+endif ()
+
 include_directories(lib/termcolor/include)
 
 add_executable(${PROJECT_NAME} main.cpp)
+target_link_libraries(${PROJECT_NAME} boost_program_options boost_filesystem)
