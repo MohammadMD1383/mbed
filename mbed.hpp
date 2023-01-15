@@ -20,7 +20,7 @@ void generateFromFileToFile(
 	if (headerOnly) {
 		for (const auto &input: inputs) {
 			std::ifstream inputFile{input, std::ios_base::binary};
-			printVariableWithValue(inputFile, outputHeaderFile, input);
+			printVariableWithValue(inputFile, outputHeaderFile, extractNameFromPath(input));
 			inputFile.close();
 		}
 	} else {
@@ -28,8 +28,9 @@ void generateFromFileToFile(
 		
 		for (const auto &input: inputs) {
 			std::ifstream inputFile{input, std::ios_base::binary};
-			printExternVariable(outputHeaderFile, input);
-			printVariableWithValue(inputFile, outputCFile, input);
+			const auto &name = extractNameFromPath(input);
+			printExternVariable(outputHeaderFile, name);
+			printVariableWithValue(inputFile, outputCFile, name);
 			inputFile.close();
 		}
 		
@@ -94,7 +95,7 @@ void generateFromFileToStdout(
 			printHexValues(inputFile);
 			std::cout << "\n";
 		} else {
-			printVariableWithValue(inputFile, input);
+			printVariableWithValue(inputFile, extractNameFromPath(input));
 		}
 		
 		inputFile.close();
