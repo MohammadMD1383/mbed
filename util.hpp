@@ -51,7 +51,10 @@ void printVariable(const std::string &name) {
 	printVariable(std::cout, name);
 }
 
-void printExternVariable(std::ostream &os, const std::string &name) {
+void printExternVariable(
+	std::ostream &os,
+	const std::string &name
+) {
 	os << "extern ";
 	printVariable(os, name);
 	os << ";";

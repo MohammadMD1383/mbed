@@ -47,7 +47,6 @@ int main(int argc, char *argv[]) {
 		("stdin,s", "read data from stdin and output to stdout if the <output> arg is not specified")
 		("stdout,S", "output generated data to stdout even if the <output> arg is present")
 		("chars-only,c", "output only generated characters instead of a 'c' file content")
-		("watch,w", "watch input file(s) for changes and reproduce the header")
 		("help,h", "print this help message")
 		("version,v", "print version info");
 	
@@ -114,8 +113,7 @@ int main(int argc, char *argv[]) {
 					inputs,
 					output,
 					guard,
-					headerOnly,
-					vmap.contains("watch")
+					headerOnly
 				);
 			}
 		}

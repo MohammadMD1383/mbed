@@ -1,4 +1,4 @@
-file  -> file   (.c/.h) [header_only,watch]
+file  -> file   (.c/.h) [header_only]
 stdin -> file   (.c/.h) [header-only]
 stdin -> stdout (.h)    [chars-only]
 file  -> stdout (.h)    [chars-only]

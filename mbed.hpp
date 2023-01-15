@@ -12,10 +12,32 @@ void generateFromFileToFile(
 	const std::vector<std::string> &inputs,
 	const std::string &output,
 	const std::string &guard,
-	bool headerOnly,
-	bool watch
+	bool headerOnly
 ) {
-	throw "Not Implemented";
+	std::ofstream outputHeaderFile{output + ".h", std::ios_base::trunc};
+	printHeader(outputHeaderFile, guard);
+	
+	if (headerOnly) {
+		for (const auto &input: inputs) {
+			std::ifstream inputFile{input, std::ios_base::binary};
+			printVariableWithValue(inputFile, outputHeaderFile, input);
+			inputFile.close();
+		}
+	} else {
+		std::ofstream outputCFile{output + ".c", std::ios_base::trunc};
+		
+		for (const auto &input: inputs) {
+			std::ifstream inputFile{input, std::ios_base::binary};
+			printExternVariable(outputHeaderFile, input);
+			printVariableWithValue(inputFile, outputCFile, input);
+			inputFile.close();
+		}
+		
+		outputCFile.close();
+	}
+	
+	printFooter(outputHeaderFile);
+	outputHeaderFile.close();
 }
 
 void generateFromStdinToFile(
@@ -73,7 +95,6 @@ void generateFromFileToStdout(
 			std::cout << "\n";
 		} else {
 			printVariableWithValue(inputFile, input);
-			std::cout << "\n";
 		}
 		
 		inputFile.close();
