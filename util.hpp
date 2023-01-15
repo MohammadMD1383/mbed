@@ -2,6 +2,7 @@
 #include <sstream>
 #include <iomanip>
 #include <iostream>
+#include <boost/filesystem.hpp>
 
 #ifndef MBED_UTIL_HPP
 #define MBED_UTIL_HPP
@@ -110,8 +111,22 @@ void printFooter() {
 	printFooter(std::cout);
 }
 
+std::string extractNameFromPath(const boost::filesystem::path &p) {
+	auto name = p.stem().string();
+	
+	std::replace_if(name.begin(), name.end(), [](const auto &c) {
+		return !std::isalnum(c);
+	}, '_');
+	
+	if (isdigit(name[0])) {
+		name.insert(0, "_");
+	}
+	
+	return name;
+}
+
 std::string generateSingleName(const std::vector<std::string> &inputs) {
-	return inputs.empty() ? "mbed" : inputs[0];
+	return inputs.empty() ? "mbed" : extractNameFromPath(inputs[0]);
 }
 
 #endif //MBED_UTIL_HPP
