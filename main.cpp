@@ -1,5 +1,4 @@
 #include <iostream>
-#include <boost/filesystem.hpp>
 #include <termcolor/termcolor.hpp>
 #include <boost/program_options.hpp>
 #include <boost/exception/diagnostic_information.hpp>
@@ -12,6 +11,7 @@
 #endif
 
 #include "mbed.hpp"
+#include "resource/mbed_examples.h"
 
 using namespace std;
 using namespace termcolor;
@@ -48,6 +48,7 @@ int main(int argc, char *argv[]) {
 		("stdout,S", "output generated data to stdout even if the <output> arg is present")
 		("chars-only,c", "output only generated characters instead of a 'c' file content")
 		("help,h", "print this help message")
+		("examples,e", "print examples")
 		("version,v", "print version info");
 	
 	positional_options_description positional{};
@@ -65,6 +66,11 @@ int main(int argc, char *argv[]) {
 	
 	if (vmap.contains("help")) {
 		cout << description << endl;
+		return 0;
+	}
+	
+	if (vmap.contains("examples")) {
+		cout << examples << endl;
 		return 0;
 	}
 	
