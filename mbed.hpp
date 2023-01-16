@@ -14,7 +14,7 @@ void generateFromFileToFile(
 	const std::string &guard,
 	bool headerOnly
 ) {
-	std::ofstream outputHeaderFile{"mbed_" + output + ".h", std::ios_base::trunc};
+	std::ofstream outputHeaderFile{transformPath(output) + ".h", std::ios_base::trunc};
 	printHeader(outputHeaderFile, guard);
 	
 	if (headerOnly) {
@@ -24,7 +24,7 @@ void generateFromFileToFile(
 			inputFile.close();
 		}
 	} else {
-		std::ofstream outputCFile{"mbed_" + output + ".c", std::ios_base::trunc};
+		std::ofstream outputCFile{transformPath(output) + ".c", std::ios_base::trunc};
 		
 		for (const auto &input: inputs) {
 			std::ifstream inputFile{input, std::ios_base::binary};
@@ -47,7 +47,7 @@ void generateFromStdinToFile(
 	const std::string &guard,
 	bool headerOnly
 ) {
-	std::ofstream outputHeaderFile{"mbed_" + output + ".h", std::ios_base::trunc};
+	std::ofstream outputHeaderFile{transformPath(output) + ".h", std::ios_base::trunc};
 	printHeader(outputHeaderFile, guard);
 	
 	const auto &name = generateSingleName(inputs);
@@ -56,7 +56,7 @@ void generateFromStdinToFile(
 	} else {
 		printExternVariable(outputHeaderFile, name);
 		
-		std::ofstream outputCFile{"mbed_" + output + ".c", std::ios_base::trunc};
+		std::ofstream outputCFile{transformPath(output) + ".c", std::ios_base::trunc};
 		printVariableWithValue(outputCFile, name);
 		outputCFile.close();
 	}

@@ -111,6 +111,12 @@ void printFooter() {
 	printFooter(std::cout);
 }
 
+std::string transformPath(const boost::filesystem::path &p) {
+	auto filename = p.filename().string();
+	filename.insert(0, "mbed_");
+	return (p.parent_path() / filename).string();
+}
+
 std::string extractNameFromPath(const boost::filesystem::path &p) {
 	auto name = p.stem().string();
 	
