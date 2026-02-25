@@ -1,4 +1,7 @@
 # mbed
+
+# This repo is archived as the new GCC provides such functionality
+
 lets you embed any file in a c/c++ program using a generated header file
 
 ### `mbed --help`
